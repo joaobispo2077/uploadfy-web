@@ -1,8 +1,12 @@
 import GlobalStyle from './styles/global';
-
+import { Container, Content } from './styles';
 function App() {
   return (
-    <GlobalStyle />
+    <Container>
+      <Content>Teste</Content>
+      <GlobalStyle/>
+    </Container>
+
   );
 }
 
