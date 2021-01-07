@@ -1,9 +1,14 @@
 import GlobalStyle from './styles/global';
 import { Container, Content } from './styles';
+
+import Upload from './components/Upload';
 function App() {
   return (
     <Container>
-      <Content>Teste</Content>
+      <Content>Teste
+
+      <Upload />
+      </Content>
       <GlobalStyle/>
     </Container>
 
