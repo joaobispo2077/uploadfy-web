@@ -3,6 +3,15 @@ import Dropzone from 'react-dropzone';
 import {DropContainer, UploadMessage} from './styles';
 
 function Upload() {
+  function renderDragMessage(isDragActive, isDragReject){
+    if(!isDragActive) return <UploadMessage>Solte os seus arquivos aqui...</UploadMessage>
+
+    if(isDragReject) return <UploadMessage type="error">Arquivo não suportado</UploadMessage>
+
+    return <UploadMessage type="success">Solte os arquivos aqui</UploadMessage>
+  };
+
+  
   return(
     <Dropzone 
       accept="image/*"
@@ -16,7 +25,7 @@ function Upload() {
         isDragAccept={isDragAccept}
         >
           <input {...getInputProps()} />
-          Faça upload dos seus arquivos
+          {renderDragMessage(isDragActive, isDragReject)}
         </DropContainer>
       )
 
