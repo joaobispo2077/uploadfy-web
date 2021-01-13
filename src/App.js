@@ -9,11 +9,8 @@ import { Container, Content } from './styles';
 import Upload from './components/Upload';
 import FileList from './components/FileList';
 
+import uploadAPI from './services/api/Upload';
 function App() {
-
-  let state = {
-    uploadedFiles: []
-  };
 
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
@@ -32,7 +29,37 @@ function App() {
 
     setUploadedFiles(uploadedFiles.concat(newUploadedFiles));
 
+    uploadedFiles.forEach(processUpload);
+  };
 
+  const processUpload = (file) => {
+    console.log(file);
+
+    const data = new FormData();
+
+    data.append('file', file.file, file.name);
+
+    uploadAPI.post('images', data, {
+      onUploadProgress: e => {
+        const progress = parseInt(Math.round((e.loaded * 100) / e.total));
+
+        updateFile(file.id, {
+          progress
+        });
+
+
+      }
+    });
+
+  }
+
+  const updateFile = (id, data) => {
+    setUploadedFiles(uploadedFiles.map(uploadedFile => {
+      return id === uploadedFile.id ? 
+      { ...uploadedFile, ...data} : 
+      uploadedFile;
+    }
+    ))
   };
 
   return (
