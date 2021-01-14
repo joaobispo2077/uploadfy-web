@@ -34,6 +34,7 @@ function App() {
 
   const processUpload = (file) => {
     console.log(file);
+    // if(!file.uploaded) return;
 
     const data = new FormData();
 
@@ -49,12 +50,26 @@ function App() {
 
 
       }
+    })
+    .then(response => {
+      updateFile(file.id, { 
+        uploaded: true,
+        id: response.data._id,
+        url: response.data.url
+      });
+    })
+    .catch(error => {
+      console.log('ERROR in uploaded file', error);
+      updateFile(file.id, { 
+        error: true
+      });
     });
 
   }
 
   const updateFile = (id, data) => {
     setUploadedFiles(uploadedFiles.map(uploadedFile => {
+      console.log('updating', uploadedFile);
       return id === uploadedFile.id ? 
       { ...uploadedFile, ...data} : 
       uploadedFile;
