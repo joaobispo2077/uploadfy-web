@@ -15,7 +15,7 @@ function Upload(props) {
   return(
     <Dropzone 
       accept="image/*"
-      onDropAccepted={onUpload}
+      onDropAccepted={files => onUpload(files)}
     >
       { ({getRootProps, getInputProps, isDragActive, isDragReject, isDragAccept}) => (
         <DropContainer 
